@@ -1,4 +1,0 @@
-name,height
-terry,2.50
-tom,1.80
-jerry,1.05
