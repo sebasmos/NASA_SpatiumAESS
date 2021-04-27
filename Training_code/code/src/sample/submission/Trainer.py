@@ -70,3 +70,6 @@ if __name__ == '__main__':
         i = i+1
 
     df_train.to_csv(os.path.join(root_dir, 'train_data.csv'), index=False)
+
+
+    
