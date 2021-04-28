@@ -2,9 +2,7 @@ import numpy as np
 import sys,os
 import cv2
 import pandas as pd
-import segmentation from utils
-
-
+from utils import *
 
 def feature_extraction(path, label): # ADAPT ANNOTATIONS CORRECTLY & POLYGON + AREA EXTRACTION
   ima = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
