@@ -15,6 +15,10 @@ Configure paths on ```.sh``` appropiately before running. To run:
 
 ```./test.sh```
 
+# Bbox detection
+
+``` python object_tracker.py  ./data/video/test.mp4  ./outputs/demo.avi  yolov4 show```
+ 
 # marathon-docker-template for "data" plus "code" contests
 Template submission format for participating in Topcoder Marathon Matches.
 Information in the challenge specification always overrides information in this document.

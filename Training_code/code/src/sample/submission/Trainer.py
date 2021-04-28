@@ -1,8 +1,10 @@
 import numpy as np 
 import sys,os
-import numpy as np
 import cv2
 import pandas as pd
+import segmentation from utils
+
+
 
 def feature_extraction(path, label): # ADAPT ANNOTATIONS CORRECTLY & POLYGON + AREA EXTRACTION
   ima = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
@@ -34,8 +36,7 @@ if __name__ == '__main__':
 
     for root, dirs, files in os.walk(root_dir, topdown=True):
         for name in files:
-            path = os.path.join(root, name)
-            
+            path = os.path.join(root, name)            
             if '.png' in path  and 'images' in path:
                 training_images.append(path)
                 print(path)
@@ -68,8 +69,3 @@ if __name__ == '__main__':
     for path in training_images:
         data_train[i, :] = feature_extraction(path, 2)
         i = i+1
-
-    df_train.to_csv(os.path.join(root_dir, 'train_data.csv'), index=False)
-
-
-    
