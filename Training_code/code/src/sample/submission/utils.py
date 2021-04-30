@@ -6,7 +6,6 @@ import argparse
 import pandas as pd
 from utils import *
 import random
-
 def segmentation(path, label):
     image = cv2.imread(path)
     mask = np.zeros(image.shape[:2], np.uint8)
@@ -23,11 +22,11 @@ def segmentation(path, label):
     image = image * mask2[:, :, np.newaxis]
       
     # output segmented image with colorbar
-    '''
+   
     plt.imshow(image)
     plt.colorbar()
     plt.show()
-    
+    '''
     cv2.imwrite('/home/sebasmos/Documentos/NASA_Spacesuit/NASA_SpatiumAESS/Training_code/code/image.jpg',image)
     '''
     return image

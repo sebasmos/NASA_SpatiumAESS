@@ -68,11 +68,21 @@ if __name__ == '__main__':
     #data_test = np.zeros((test_size, Num_features+1), dtype=np.float32)
     i = 0
     for path in training_images:
+        print('    {}/{}...'.format(i+1, len(training_images)))
         data_train[i, :] = feature_extraction(path, 2)
         i = i+1
     
+    # Testing possible outputs
     joints_id = []
     geom = []
+    Num_suits = 1 # TO UPDATE ACCORDING TO IMAGE
+    Triplets = 15 #
+    aux = Num_suits*Triplets
+    #joints = np.zeros((train_size, Num_suits*Triplets))
+
+    #train ? 
+    id_images = []
+    aux = len(path) - 10
 
     for id, j in enumerate(training_images):
 
@@ -88,4 +98,13 @@ if __name__ == '__main__':
     print("joints_id: ",len(joints_id))
     print("geom: ",len(geom))
     # Store to csv
-    generar_csv(id_images,joints_id,geom)
+    df1 = pd.DataFrame(id_images) 
+    df2 = pd.DataFrame(joints_id)
+    df3 = pd.DataFrame(geom)
+
+    df4 = df1.merge(df2,left_index=True, right_index=True)
+    df4.merge(df3,left_index=True, right_index=True)
+
+    df4.to_csv("../solution/training_images.csv")
+    print("Finished, stored in: ../solution/training_images.csv ")
+    #df4.head(10)
