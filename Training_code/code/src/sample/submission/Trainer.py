@@ -1,8 +1,11 @@
 import numpy as np 
 import sys,os
 import cv2
+import matplotlib.pyplot as plt
+import argparse
 import pandas as pd
 from utils import *
+import random
 
 def feature_extraction(path, label): # ADAPT ANNOTATIONS CORRECTLY & POLYGON + AREA EXTRACTION
   ima = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
@@ -67,3 +70,22 @@ if __name__ == '__main__':
     for path in training_images:
         data_train[i, :] = feature_extraction(path, 2)
         i = i+1
+    
+    joints_id = []
+    geom = []
+
+    for id, j in enumerate(training_images):
+
+        for i in range(Num_suits):
+                #print(" es multiplo de 3")
+                x_f,y_f,v_f = gen_array()
+                joints_id.append(x_f + y_f + v_f)
+
+                x_geom, y_geom = gen_geometries()
+                geom.append(x_geom + y_geom)
+                
+    print("id_images: ",train_size)
+    print("joints_id: ",len(joints_id))
+    print("geom: ",len(geom))
+    # Store to csv
+    generar_csv(id_images,joints_id,geom)

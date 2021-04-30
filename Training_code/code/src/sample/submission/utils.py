@@ -4,6 +4,8 @@ import cv2
 import matplotlib.pyplot as plt
 import argparse
 import pandas as pd
+from utils import *
+import random
 
 def segmentation(path, label):
     image = cv2.imread(path)
@@ -21,14 +23,17 @@ def segmentation(path, label):
     image = image * mask2[:, :, np.newaxis]
       
     # output segmented image with colorbar
-   
+    '''
     plt.imshow(image)
     plt.colorbar()
     plt.show()
-    '''
+    
     cv2.imwrite('/home/sebasmos/Documentos/NASA_Spacesuit/NASA_SpatiumAESS/Training_code/code/image.jpg',image)
     '''
-    return 1
+    return image
+# Fast testing bef assignmt
+path = "/home/sebasmos/Documentos/NASA_Spacesuit/train/images/933760.jpg"
+#segmentation(path, 1)
     
 
 def feature_extraction(path, label): # ADAPT ANNOTATIONS CORRECTLY & POLYGON + AREA EXTRACTION
@@ -42,4 +47,45 @@ def feature_extraction(path, label): # ADAPT ANNOTATIONS CORRECTLY & POLYGON + A
   #features = np.array([label, mean])
   
   return segm
+
+
+
+def gen_array():
+    x_f = []
+    y_f = []
+    v_f = []
+
+    for i in range(15):
+        x_f.append(int (random.uniform(100,999)))
+        y_f.append(int (random.uniform(100,999)))
+        v_f.append(int (random.uniform(0,3)))
+
+    return x_f,y_f,v_f
+
+
+def gen_geometries():
+    x_f = []
+    y_f = []
+    type = 0
+    if type == 0: #rectangular then 8 var, 4 corners
+        for i in range(4):
+            x_f.append(int (random.uniform(100,999)))
+            y_f.append(int (random.uniform(100,999)))
+    elif type==1: # 3 corners
+        print("triangular")
+    else:
+        print("no figure detected")
+    return x_f,y_f
+    
+
+def generar_csv(imag,coo,polig):
+
+   f=open(local_dir,'w')
+
+   for l in range (len(imag)):
+      
+      f.write(str(imag[l])+','+str(coo[l])+','+str(polig[l])+'\n')
+
+   f.close()
+print("Stored in ../../../solution_sintetica.csv")
 
