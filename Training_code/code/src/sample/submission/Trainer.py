@@ -1,11 +1,8 @@
 import numpy as np 
 import sys,os
 import cv2
-import matplotlib.pyplot as plt
-import argparse
 import pandas as pd
 from utils import *
-import random
 
 def feature_extraction(path, label): # ADAPT ANNOTATIONS CORRECTLY & POLYGON + AREA EXTRACTION
   ima = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
@@ -59,22 +56,26 @@ if __name__ == '__main__':
     print('video_frames evaluation instances: ', len(video_frames))
     #print(video_frames_ann)
 
+    #---------------------FEATURE EXTRACTION--------------------------------------------
+    i = 0
     # Training with images 
     Num_features = 1
-    feat_names = ['Polygon']
+    feat_names = ['Polygon'] # TODO: EXTRACT TRIPLETS HERE!
     train_size = len(training_images)
 
     data_train = np.zeros((train_size, Num_features+1), dtype=np.float32)
     #data_test = np.zeros((test_size, Num_features+1), dtype=np.float32)
-    i = 0
     for path in training_images:
         print('    {}/{}...'.format(i+1, len(training_images)))
+        print("numver of feat: ", len(feature_extraction(path, 2)))
+        print("feat value : ", (feature_extraction(path, 2)))
         data_train[i, :] = feature_extraction(path, 2)
         i = i+1
-    
-    # Testing possible outputs
-    joints_id = []
-    geom = []
+    train_size = len(training_images)
+    print("training data: ", train_size)
+    #train_pd = pd.read_csv("/home/sebasmos/Documentos/NASA_Spacesuit/NASA_SpatiumAESS/Training_code/code/src/sample/submission/training_images.csv")
+    #---------------------END OF FEATURE EXTRACTION-----------------------------------
+
     Num_suits = 1 # TO UPDATE ACCORDING TO IMAGE
     Triplets = 15 #
     aux = Num_suits*Triplets
@@ -83,28 +84,21 @@ if __name__ == '__main__':
     #train ? 
     id_images = []
     aux = len(path) - 10
+    for path in training_images:
+        id_images.append(path[aux:len(path)])
+    joints_id = []
+    geom = []
 
     for id, j in enumerate(training_images):
 
         for i in range(Num_suits):
-                #print(" es multiplo de 3")
                 x_f,y_f,v_f = gen_array()
                 joints_id.append(x_f + y_f + v_f)
-
                 x_geom, y_geom = gen_geometries()
                 geom.append(x_geom + y_geom)
                 
     print("id_images: ",train_size)
     print("joints_id: ",len(joints_id))
     print("geom: ",len(geom))
-    # Store to csv
-    df1 = pd.DataFrame(id_images) 
-    df2 = pd.DataFrame(joints_id)
-    df3 = pd.DataFrame(geom)
 
-    df4 = df1.merge(df2,left_index=True, right_index=True)
-    df4.merge(df3,left_index=True, right_index=True)
-
-    df4.to_csv("../solution/training_images.csv")
-    print("Finished, stored in: ../solution/training_images.csv ")
-    #df4.head(10)
+    generar_csv (id_images,joints_id,geom)

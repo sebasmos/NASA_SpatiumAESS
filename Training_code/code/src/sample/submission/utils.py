@@ -3,11 +3,14 @@ import sys,os
 import cv2
 import matplotlib.pyplot as plt
 import argparse
-import pandas as pd
-from utils import *
 import random
+import pandas as pd
+
 def segmentation(path, label):
+
+    IMG_SIZE = 500
     image = cv2.imread(path)
+    #image = cv2.resize(image, (IMG_SIZE, IMG_SIZE))
     mask = np.zeros(image.shape[:2], np.uint8)
     backgroundModel = np.zeros((1, 65), np.float64)
     foregroundModel = np.zeros((1, 65), np.float64)
@@ -19,34 +22,47 @@ def segmentation(path, label):
    
     # The final mask is multiplied with 
     # the input image to give the segmented image.
+    
     image = image * mask2[:, :, np.newaxis]
-      
+
+    image = cv2.cvtColor(src=image, code=cv2.COLOR_BGR2GRAY)
     # output segmented image with colorbar
-   
-    plt.imshow(image)
+    
+    rows,cols = image.shape
+
+    # Create mask
+    mask = image.copy()
+
+    for i in range(rows):
+        for j in range(cols):
+            k = image[i,j]
+            if k > 100:
+                mask[i,j] = 1
+            else:
+                mask[i,j] = 0
+    mask = cv2.resize(mask, (IMG_SIZE, IMG_SIZE))
+    '''
+    plt.imshow(mask)
     plt.colorbar()
     plt.show()
-    '''
+    
     cv2.imwrite('/home/sebasmos/Documentos/NASA_Spacesuit/NASA_SpatiumAESS/Training_code/code/image.jpg',image)
     '''
-    return image
-# Fast testing bef assignmt
-path = "/home/sebasmos/Documentos/NASA_Spacesuit/train/images/933760.jpg"
-#segmentation(path, 1)
-    
+    return mask
+
 
 def feature_extraction(path, label): # ADAPT ANNOTATIONS CORRECTLY & POLYGON + AREA EXTRACTION
   #ima = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
-  #mean = np.mean(ima)
+  
   segm = segmentation(path, label)
+  mean = np.mean(segm)
   #contrast = np.amax(ima)-np.amin(ima)
   #sdev = np.std(ima)
   #ssd_blur, blur_count = homogeinty(path)
   #features = np.array([label, mean, contrast, sdev, ssd_blur, blur_count])
-  #features = np.array([label, mean])
+  #features = np.array([label, mean])<
   
-  return segm
-
+  return mean
 
 
 def gen_array():
@@ -76,15 +92,12 @@ def gen_geometries():
         print("no figure detected")
     return x_f,y_f
     
+def generar_csv (imag,coo,polig):
 
-def generar_csv(imag,coo,polig):
-
-   f=open(local_dir,'w')
+   f=open('../solution/solution.csv','w')
 
    for l in range (len(imag)):
       
       f.write(str(imag[l])+','+str(coo[l])+','+str(polig[l])+'\n')
 
    f.close()
-print("Stored in ../../../solution_sintetica.csv")
-
