@@ -1,7 +1,0 @@
-https://github.com/theAIGuysCode/yolov4-deepsort
-
-python object_tracker.py --video ./data/video/test.mp4 --output ./outputs/demo.avi --model yolov4
-
-python object_tracker.py --weights ./checkpoints/yolov4-tiny-416 --model yolov4 --video ./data/video/test.mp4 --output ./outputs/tiny.avi --tiny
-
---dont_show 'True'
