@@ -72,6 +72,6 @@ if __name__ == '__main__':
          id_img = path[len(path) - 10:len(path)]
          # Add id + triplets + geoms
          row_str = ",".join(map(str, data_train))
-         file1 = open("../solution/images/annotations/solutions.csv","a")
+         file1 = open("./solution/images/annotations/solutions.csv","a")
          file1.write(row_str + " \n")
          file1.close()

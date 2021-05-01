@@ -1,10 +1,19 @@
-import sys
 
-if __name__ == '__main__':
-    # Parse arguments.
-    if len(sys.argv) != 2:
-        raise Exception('Include the data folder as argument, e.g., python Trainer.py training_Data')
+print('###########################################')
+print('########## Test.sh is Working ############')
+print('###########################################')
+# 
+#
+# 
+# 
+# 
+# import sys
 
-    root_dir = sys.argv[1]
+# if __name__ == '__main__':
+#     # Parse arguments.
+#     if len(sys.argv) != 2:
+#         raise Exception('Include the data folder as argument, e.g., python Trainer.py training_Data')
 
-    print("Accessed to training data ", root_dir)
+#     root_dir = sys.argv[1]
+
+#     print("Accessed to training data ", root_dir)
