@@ -13,12 +13,21 @@ from pathlib import Path
 if __name__ == '__main__':
      # Parse arguments.
      if len(sys.argv) != 3:
-         raise Exception('Include the data folder as argument, e.g., ./test.sh ./data/test ./wdata/images/annotations')
+         raise Exception('Include the data folder as argument, e.g., ./test.sh ./data/test ./wdata/')
      root_test_data = sys.argv[1]
+
      root_sol = sys.argv[2]
 
+     # Root to store csv: 
+     root_sol_img = os.path.join(root_sol, "images/annotations/")
+     root_sol_videos = os.path.join(root_sol, "videos/annotations/")
+     try:
+         os.makedirs(root_sol_img, exist_ok = True)
+         os.makedirs(root_sol_videos, exist_ok =True)
+     except: 
+         pass
+
      root_dir = os.path.join(root_test_data) 
-     root_solutions = os.path.join(root_sol) 
 
      print("Accessed to testing data ", root_dir)
      if 'Training_code' in os.listdir('.'):
@@ -72,13 +81,10 @@ if __name__ == '__main__':
    
      i = 0
      # Training with images 
-     Num_features = 1
-     feat_names = ['Polygon'] # TODO: EXTRACT TRIPLETS HERE!
      train_size = len(training_images)
      final = []
 
-     data_train = []# np.zeros((train_size, Num_features+1), dtype=np.float32)
-    #data_test = np.zeros((test_size, Num_features+1), dtype=np.float32)
+     data_train = []
 
     #--------------------------IMAGES-----------------------------------------------------------
      
@@ -97,10 +103,11 @@ if __name__ == '__main__':
          print(' {} '.format(row))
     
          #file1 = open("solutions_final.csv","a")
-         file1 = open("./wdata/images/annotations/solutions.csv","a")
+         file1 = open(root_sol_img+"solutions.txt","a")
          file1.write(row + " \n")
          file1.close()
          i = i+1
+     print("Finished annotation images.. ")
      
      #--------------------------VIDEOS----------------------------------------------------------
      print("Creating wdata/videos/annotations/<id-video>.csv [..]")
@@ -117,7 +124,7 @@ if __name__ == '__main__':
          for v in videos:
              if v in frame_path:
                  print('    {}/{}...'.format(kk+1, len(video_frames)))
-                 anotations_path = "{}".format(root_solutions)
+                 anotations_path = "{}".format(root_sol_videos)
                  # create anotations folder if not exists
                  try:
                      os.makedirs(anotations_path)
@@ -133,11 +140,6 @@ if __name__ == '__main__':
                      file1.write(topheader + " \n" + header_str)
                  triplets, flag = video_feature_extraction(path , 2)
                  id_img = frame_path[len(path) - 15:len(path)]
-    #              id_img=''
-    #              if flag==True:
-    #                  row = id_img
-    #              else:
-    #                  row = id_img + ',' +str(triplets)[1:-1]
                  row = str(triplets)[1:-1]
                  print(' {} '.format(row))
                  #record the first column index

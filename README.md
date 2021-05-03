@@ -1,51 +1,52 @@
 # SpatiumAESS 
 
 # Docker:
-$ docker build -t nasa .
+$ ```docker build -t nasa .``` 
 
-$ sudo docker run -v /home/sebasmos/Documentos/NASA_Spacesuit/Model_1_short_segmentation/Training_code/code/data:/nasa/data:ro -v /home/sebasmos/Documentos/NASA_Spacesuit/Model_1_short_segmentation/Training_code/solution:/nasa/solution -it nasa bash
+$ ``` sudo docker run -v /home/sebasmos/Documentos/NASA_Spacesuit/Model_1_short_segmentation/Training_code/code/data:/nasa/data:ro -v /home/sebasmos/Documentos/NASA_Spacesuit/Model_1_short_segmentation/Training_code/solution:/nasa/wdata -it nasa bash``` 
 
-$ ./train.sh 
+$ ``` ./train.sh ./data/train``` 
 
-$./test.sh 
+$ ``` ./test.sh  ./data/test ./wdata/images/annotations``` 
 
 
 EXAMPLE 
 
 path to data: 
 
-/home/sebasmos/Documentos/NASA_Spacesuit/Model_1_short_segmentation/Training_code/code/data
+``` /home/sebasmos/Documentos/NASA_Spacesuit/Model_1_short_segmentation/Training_code/code/data``` 
 
 path to solution:
 
-/home/sebasmos/Documentos/NASA_Spacesuit/Model_1_short_segmentation/Training_code/solution
+``` /home/sebasmos/Documentos/NASA_Spacesuit/Model_1_short_segmentation/Training_code/solution``` 
 
 # Acess to shell
 
 
-$docker run -v <local_data_path>:/nasa/data:ro -v <path to solution folder >:/nasa/wdata -t nasa sh train
+$``` docker run -v <local_data_path>:/nasa/data:ro -v <path to solution folder >:/nasa/wdata -t nasa sh train``` 
 
 
-sudo docker run -v /home/sebasmos/Documentos/NASA_Spacesuit/Model_1_short_segmentation/Training_code/code/data:/nasa/data:ro -v /home/sebasmos/Documentos/NASA_Spacesuit/Model_1_short_segmentation/Training_code/solution:/nasa/wdata -it nasa bash
+``` sudo docker run -v /home/sebasmos/Documentos/NASA_Spacesuit/Model_1_short_segmentation/Training_code/code/data:/nasa/data:ro -v /home/sebasmos/Documentos/NASA_Spacesuit/Model_1_short_segmentation/Training_code/solution:/nasa/wdata -it nasa bash``` 
 
 
 
 # Prune
 
-docker system prune
+$ ``` docker system prune``` 
 
 
 # Debe ir la ruta absoluta completa segun el sistema opertivo
 
 EXAMPLE
 
-$ docker run -v "/home/sebasmos/Documentos/NASA_Spacesuit/Model_1_short_segmentation/Training_code:/nasa/" nasa
+$ ``` docker run -v "/home/sebasmos/Documentos/NASA_Spacesuit/Model_1_short_segmentation/Training_code:/nasa/" nasa``` 
 
 ## Clone repository:
 
-git clone https://github.com/sebasmos/NASA_SpatiumAESS.git
+``` git clone https://github.com/sebasmos/NASA_SpatiumAESS.git``` 
 
-## Initial setting for testing:
+## Initial setting for testing. 
+
 Provide permission through shell:
  
 
