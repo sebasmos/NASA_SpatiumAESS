@@ -1,7 +1,0 @@
-numpy==1.19.1
-absl-py
-pandas==1.0.5
-opencv_python==4.5.1.48
-easydict==1.9
-matplotlib==3.3.4
-scipy==1.5.4
